@@ -75,167 +75,132 @@ def home():
 
 # ---------------- PREDICT ----------------
 
-@app.route(
-    "/predict",
-    methods=["POST"]
-)
+@app.route("/predict", methods=["POST"])
 def predict():
 
-    patient_name = request.form.get(
-        "patient_name"
-    )
+    try:
 
-    uploaded_file = request.files.get(
-        "image"
-    )
+        patient_name = request.form.get("patient_name")
+        uploaded_file = request.files.get("image")
 
-    if not patient_name:
+        if not patient_name:
+            return "Patient name required"
 
-        return "Patient name required"
+        if not uploaded_file:
+            return "Image required"
 
-    if not uploaded_file:
+        if not re.match(r"^[A-Za-z ]+$", patient_name.strip()):
+            return "Invalid Patient Name"
 
-        return "Image required"
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    if not re.match(
-        r"^[A-Za-z ]+$",
-        patient_name.strip()
-    ):
-
-        return "Invalid Patient Name"
-
-    timestamp = datetime.datetime.now()\
-        .strftime("%Y%m%d_%H%M%S")
-
-    image_path = os.path.join(
-        UPLOAD_DIR,
-        f"{timestamp}_{uploaded_file.filename}"
-    )
-
-    uploaded_file.save(
-        image_path
-    )
-
-    image = Image.open(
-        image_path
-    ).convert("RGB")
-
-    img_array = preprocess_image(
-        image
-    )
-
-    predictions = model.predict(
-        img_array,
-        verbose=0
-    )[0]
-
-    predicted_index = np.argmax(
-        predictions
-    )
-
-    predicted_class = CLASS_NAMES[
-        predicted_index
-    ]
-
-    confidence = float(
-        predictions[predicted_index]
-        * 100
-    )
-
-    probability_dict = {
-
-        CLASS_NAMES[i]:
-        round(
-            float(predictions[i]) * 100,
-            2
+        image_path = os.path.join(
+            UPLOAD_DIR,
+            f"{timestamp}_{uploaded_file.filename}"
         )
 
-        for i in range(
-            len(CLASS_NAMES)
+        uploaded_file.save(image_path)
+
+        image = Image.open(image_path).convert("RGB")
+
+        img_array = preprocess_image(image)
+
+        predictions = model.predict(
+            img_array,
+            verbose=0
+        )[0]
+
+        predicted_index = np.argmax(predictions)
+
+        predicted_class = CLASS_NAMES[predicted_index]
+
+        confidence = float(
+            predictions[predicted_index] * 100
         )
-    }
 
-    # ---------------- GRADCAM ----------------
+        probability_dict = {
+            CLASS_NAMES[i]:
+            round(float(predictions[i]) * 100, 2)
+            for i in range(len(CLASS_NAMES))
+        }
 
-    heatmap = generate_gradcam(
-        model,
-        img_array,
-        predicted_index
-    )
+        # ---------------- GRADCAM ----------------
 
-    overlay = overlay_heatmap(
-        image,
-        heatmap
-    )
-
-    gradcam_filename = (
-        f"gradcam_{timestamp}.png"
-    )
-
-    gradcam_path = os.path.join(
-        TEMP_DIR,
-        gradcam_filename
-    )
-
-    cv2.imwrite(
-        gradcam_path,
-        cv2.cvtColor(
-            overlay,
-            cv2.COLOR_RGB2BGR
+        heatmap = generate_gradcam(
+            model,
+            img_array,
+            predicted_index
         )
-    )
 
-    # ---------------- PDF ----------------
+        overlay = overlay_heatmap(
+            image,
+            heatmap
+        )
 
-    report_filename = (
-        f"report_{timestamp}.pdf"
-    )
+        gradcam_filename = f"gradcam_{timestamp}.png"
 
-    pdf_path = os.path.join(
-        REPORT_DIR,
-        report_filename
-    )
+        gradcam_path = os.path.join(
+            TEMP_DIR,
+            gradcam_filename
+        )
 
-    current_time = datetime\
-        .datetime.now()\
-        .strftime(
+        cv2.imwrite(
+            gradcam_path,
+            cv2.cvtColor(
+                overlay,
+                cv2.COLOR_RGB2BGR
+            )
+        )
+
+        # ---------------- PDF ----------------
+
+        report_filename = f"report_{timestamp}.pdf"
+
+        pdf_path = os.path.join(
+            REPORT_DIR,
+            report_filename
+        )
+
+        current_time = datetime.datetime.now().strftime(
             "%Y-%m-%d %H:%M:%S"
         )
 
-    # generate_pdf(
-    #     patient_name,
-    #     image_path,
-    #     predicted_class,
-    #     probability_dict,
-    #     gradcam_path,
-    #     pdf_path,
-    #     current_time
-    # )
+        # TEMPORARILY DISABLED FOR DEBUGGING
+        # generate_pdf(
+        #     patient_name,
+        #     image_path,
+        #     predicted_class,
+        #     probability_dict,
+        #     gradcam_path,
+        #     pdf_path,
+        #     current_time
+        # )
 
-    return render_template(
-        "result.html",
+        return render_template(
+            "result.html",
+            patient_name=patient_name,
+            prediction=predicted_class,
+            confidence=round(confidence, 2),
+            probabilities=probability_dict,
+            image_path=image_path,
+            gradcam_path=gradcam_path,
+            report_path=pdf_path
+        )
 
-        patient_name=
-        patient_name,
+    except Exception as e:
 
-        prediction=
-        predicted_class,
+        import traceback
 
-        confidence=
-        round(confidence,2),
+        return f"""
+        <h1>ERROR OCCURRED</h1>
+        <pre>
+{str(e)}
 
-        probabilities=
-        probability_dict,
+--------------------
 
-        image_path=
-        image_path,
-
-        gradcam_path=
-        gradcam_path,
-
-        report_path=
-        pdf_path
-    )
+{traceback.format_exc()}
+        </pre>
+        """
 
 # ---------------- DOWNLOAD REPORT ----------------
 
@@ -258,4 +223,3 @@ if __name__ == "__main__":
     app.run(
         debug=True
     )
-

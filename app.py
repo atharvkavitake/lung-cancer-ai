@@ -202,15 +202,15 @@ def predict():
             "%Y-%m-%d %H:%M:%S"
         )
 
-    generate_pdf(
-        patient_name,
-        image_path,
-        predicted_class,
-        probability_dict,
-        gradcam_path,
-        pdf_path,
-        current_time
-    )
+    # generate_pdf(
+    #     patient_name,
+    #     image_path,
+    #     predicted_class,
+    #     probability_dict,
+    #     gradcam_path,
+    #     pdf_path,
+    #     current_time
+    # )
 
     return render_template(
         "result.html",

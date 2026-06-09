@@ -124,46 +124,46 @@ def predict():
             for i in range(len(CLASS_NAMES))
         }
 
-        # ---------------- GRADCAM ----------------
+        # # ---------------- GRADCAM ----------------
 
-        heatmap = generate_gradcam(
-            model,
-            img_array,
-            predicted_index
-        )
+        # heatmap = generate_gradcam(
+        #     model,
+        #     img_array,
+        #     predicted_index
+        # )
 
-        overlay = overlay_heatmap(
-            image,
-            heatmap
-        )
+        # overlay = overlay_heatmap(
+        #     image,
+        #     heatmap
+        # )
 
-        gradcam_filename = f"gradcam_{timestamp}.png"
+        # gradcam_filename = f"gradcam_{timestamp}.png"
 
-        gradcam_path = os.path.join(
-            TEMP_DIR,
-            gradcam_filename
-        )
+        # gradcam_path = os.path.join(
+        #     TEMP_DIR,
+        #     gradcam_filename
+        # )
 
-        cv2.imwrite(
-            gradcam_path,
-            cv2.cvtColor(
-                overlay,
-                cv2.COLOR_RGB2BGR
-            )
-        )
+        # cv2.imwrite(
+        #     gradcam_path,
+        #     cv2.cvtColor(
+        #         overlay,
+        #         cv2.COLOR_RGB2BGR
+        #     )
+        # )
 
-        # ---------------- PDF ----------------
+        # # ---------------- PDF ----------------
 
-        report_filename = f"report_{timestamp}.pdf"
+        # report_filename = f"report_{timestamp}.pdf"
 
-        pdf_path = os.path.join(
-            REPORT_DIR,
-            report_filename
-        )
+        # pdf_path = os.path.join(
+        #     REPORT_DIR,
+        #     report_filename
+        # )
 
-        current_time = datetime.datetime.now().strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
+        # current_time = datetime.datetime.now().strftime(
+        #     "%Y-%m-%d %H:%M:%S"
+        # )
 
         # TEMPORARILY DISABLED FOR DEBUGGING
         # generate_pdf(
@@ -176,16 +176,19 @@ def predict():
         #     current_time
         # )
 
-        return render_template(
-            "result.html",
-            patient_name=patient_name,
-            prediction=predicted_class,
-            confidence=round(confidence, 2),
-            probabilities=probability_dict,
-            image_path=image_path,
-            gradcam_path=gradcam_path,
-            report_path=pdf_path
-        )
+        return f"""
+<h1>Prediction Successful</h1>
+
+<p><b>Patient:</b> {patient_name}</p>
+
+<p><b>Prediction:</b> {predicted_class}</p>
+
+<p><b>Confidence:</b> {round(confidence,2)}%</p>
+
+<p><b>Probabilities:</b></p>
+
+<pre>{probability_dict}</pre>
+"""
 
     except Exception as e:
 

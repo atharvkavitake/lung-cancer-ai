@@ -1,141 +1,166 @@
-# 🫁 Lung Cancer Detection System
+# 🫁 AI Lung Cancer Detection System
 
-## 📌 Project Overview
+## 🚀 Overview
 
-Lung Cancer Detection System is an Artificial Intelligence (AI) based project that helps detect lung cancer from histopathology images.
+The **AI Lung Cancer Detection System** is a Deep Learning-based web application that analyzes histopathology lung tissue images and predicts the presence of lung cancer.
 
-The system uses **Deep Learning** and **Computer Vision** techniques to classify lung tissue images into different categories.
+The system leverages **Transfer Learning (VGG16)**, **Computer Vision**, and **Explainable AI (Grad-CAM)** to assist in the classification of lung tissue images into different diagnostic categories.
 
-This project is made for **educational and demonstration purposes**.
+The application provides:
 
----
-
-## 🎯 Objective
-
-The main goal of this project is:
-
-- Detect lung cancer using histopathology images
-- Help understand how AI works in healthcare
-- Generate prediction reports automatically
-- Visualize affected areas using Grad-CAM heatmap
+* AI-powered prediction
+* Confidence score visualization
+* Grad-CAM explainability
+* PDF report generation
+* Modern Flask-based web dashboard
 
 ---
 
-## 🧠 Technologies Used
+## 🎯 Project Objectives
 
-This project is developed using:
-
-| Technology | Purpose |
-|------------|---------|
-| Python | Programming Language |
-| TensorFlow | Deep Learning Model |
-| Streamlit | Web Application UI |
-| OpenCV | Image Processing |
-| Plotly | Data Visualization |
-| ReportLab | PDF Report Generation |
-| VGG16 | Transfer Learning Model |
+* Detect lung cancer from histopathology images
+* Demonstrate AI applications in healthcare
+* Visualize model attention using Grad-CAM
+* Generate downloadable diagnostic reports
+* Provide an interactive web-based interface
 
 ---
 
-## 🫁 Lung Cancer Classes
+## 🧠 Deep Learning Model
 
-The system can detect:
+### Transfer Learning: VGG16
 
-1. **Normal Lung Tissue**
-2. **Lung Adenocarcinoma**
-3. **Lung Squamous Cell Carcinoma**
+This project uses a pre-trained **VGG16 Convolutional Neural Network (CNN)** for feature extraction and classification.
+
+### Advantages
+
+* High-quality feature extraction
+* Faster training
+* Better generalization
+* Improved classification performance
 
 ---
 
-## ⚙️ Features
+## 🫁 Classification Categories
 
-✅ Upload histopathology image
+The model classifies images into:
 
-✅ AI-based cancer prediction
+| Class                        | Description         |
+| ---------------------------- | ------------------- |
+| Normal Lung Tissue           | Healthy Lung Tissue |
+| Lung Adenocarcinoma          | Lung Cancer Type    |
+| Lung Squamous Cell Carcinoma | Lung Cancer Type    |
 
-✅ Confidence score visualization
+---
 
-✅ Grad-CAM heatmap generation
+## ✨ Features
 
-✅ PDF report generation
+* 📤 Histopathology Image Upload
+* 🧠 AI-Based Cancer Prediction
+* 📊 Confidence Score Visualization
+* 🔥 Grad-CAM Heatmap Generation
+* 📄 PDF Report Generation
+* 👤 Patient Information Validation
+* 🌐 Flask Web Application
+* 📱 Responsive Dashboard UI
 
-✅ Patient name validation
+---
 
-✅ Interactive graphs
+## 🛠 Technology Stack
 
-✅ Premium Medical Dashboard UI
+### Backend
+
+* Python
+* Flask
+* TensorFlow
+* OpenCV
+* NumPy
+
+### Frontend
+
+* HTML5
+* CSS3
+* JavaScript
+* Chart.js
+
+### Reporting
+
+* ReportLab
+
+### Explainable AI
+
+* Grad-CAM
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-Lung_Cancer_Detection_System/
-│── app.py
-│── train.py
-│── gradcam.py
-│── report.py
-│── requirements.txt
-│── README.md
+LUNG_CANCER_DETECTION_SYSTEM
+│
+├── app.py
+├── gradcam.py
+├── report.py
+├── requirements.txt
+├── Procfile
 │
 ├── model/
 │   └── best_lung_model.h5
 │
+├── templates/
+│   ├── index.html
+│   └── result.html
+│
 ├── static/
+│   ├── assets/
+│   ├── css/
+│   ├── js/
 │   ├── uploads/
 │   ├── reports/
 │   └── temp/
+│
+└── README.md
 ```
 
 ---
 
-## 📸 How It Works
+## ⚙️ Workflow
 
-### Step 1: Enter Patient Name
-The user enters the patient name.
+### Step 1
 
-### Step 2: Upload Image
-Upload a lung histopathology image.
+User enters patient information.
 
-### Step 3: AI Prediction
-The AI model predicts:
+### Step 2
 
-- Normal Lung Tissue
-- Lung Adenocarcinoma
-- Lung Squamous Cell Carcinoma
+Histopathology image is uploaded.
 
-### Step 4: Confidence Graph
-The system displays confidence scores using graphs.
+### Step 3
 
-### Step 5: Grad-CAM Heatmap
-The system highlights important regions in the image.
+The image is preprocessed and passed to the trained VGG16 model.
 
-### Step 6: Generate PDF Report
-A medical-style PDF report is generated automatically.
+### Step 4
 
----
+The model predicts the most probable class.
 
-## 🤖 Deep Learning Model
+### Step 5
 
-This project uses **VGG16 Transfer Learning Model**.
+Confidence scores are visualized using interactive charts.
 
-### Why VGG16?
+### Step 6
 
-VGG16 is a pre-trained deep learning model that helps in:
+Grad-CAM highlights important image regions.
 
-- Better feature extraction
-- Faster training
-- Higher accuracy
-- Better image classification
+### Step 7
+
+A PDF diagnostic report is generated.
 
 ---
 
-## 📊 Dataset
-
-The dataset contains lung histopathology images divided into:
+## 📊 Dataset Structure
 
 ```text
 dataset/
+│
 ├── train/
 │   ├── lung_n
 │   ├── lung_aca
@@ -149,84 +174,102 @@ dataset/
 
 ---
 
-## 🚀 How to Run Project
+## 💻 Installation
 
-### Step 1: Install Python
+### Clone Repository
 
-Install:
+```bash
+git clone https://github.com/atharvkavitake/lung-cancer-ai.git
+```
 
-**Python 3.10.11 (Recommended)**
+### Enter Project Folder
 
-⚠ Important: TensorFlow may not work properly with Python 3.14 or higher.
+```bash
+cd lung-cancer-ai
+```
 
----
-
-### Step 2: Install Libraries
-
-Run:
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-### Step 3: Run Project
-
-Run:
+### Run Application
 
 ```bash
-streamlit run app.py
+python app.py
 ```
 
 ---
 
-### Step 4: Open Browser
+## 🌐 Local Access
 
 Open:
 
 ```text
-http://localhost:8501
+http://127.0.0.1:5000
 ```
 
 ---
 
-## 📈 Model Training
+## 🚀 Deployment
 
-To train model:
+This application can be deployed using:
 
-Run:
+* Render
+* Railway
+* PythonAnywhere
+
+### Render Start Command
 
 ```bash
-python train.py
+gunicorn app:app
 ```
 
-The trained model will be saved as:
+---
 
-```text
-best_lung_model.h5
-```
+## 📸 System Outputs
+
+### Original Histopathology Image
+
+* Uploaded image visualization
+
+### AI Prediction
+
+* Predicted class
+* Confidence score
+
+### Grad-CAM Heatmap
+
+* Explainable AI visualization
+
+### PDF Report
+
+* Downloadable medical-style report
 
 ---
 
 ## ⚠ Disclaimer
 
-This project is developed only for:
+This project is intended for:
 
-- Educational purpose
-- Learning purpose
-- Demonstration purpose
+* Educational purposes
+* Research purposes
+* Demonstration purposes
 
-This system is **NOT a medical diagnosis tool**.
-
-Always consult professional doctors for medical diagnosis.
+This system is **not a certified medical diagnostic tool** and should not be used as a substitute for professional medical advice or diagnosis.
 
 ---
 
 ## 👨‍💻 Developer
 
+**Atharv Kavitake**
 
+Third Year B.Tech Engineering Student(Artificial Intelligence And Data Science)
+Government College Of Engineering, Kolhapur
 
-B.Tech / Engineering Student
+Artificial Intelligence • Machine Learning • Deep Learning
 
-AI & Deep Learning Project
+---
+
+⭐ If you found this project useful, consider giving it a star on GitHub.

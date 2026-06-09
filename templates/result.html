@@ -1,0 +1,547 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Diagnosis Result</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:linear-gradient(
+135deg,
+#020617,
+#0f172a,
+#111827
+);
+color:white;
+padding:30px;
+}
+
+/* HEADER */
+
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.header h1{
+font-size:48px;
+background:linear-gradient(
+90deg,
+#3B82F6,
+#8B5CF6
+);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.header p{
+color:#CBD5E1;
+margin-top:10px;
+}
+
+/* CARD */
+
+.card{
+
+background:
+rgba(255,255,255,0.05);
+
+backdrop-filter:
+blur(15px);
+
+border:
+1px solid rgba(255,255,255,.1);
+
+border-radius:20px;
+
+padding:25px;
+
+box-shadow:
+0 8px 32px rgba(0,0,0,.3);
+}
+
+/* STATS */
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:20px;
+
+margin-bottom:30px;
+}
+
+.stat-card{
+
+text-align:center;
+
+padding:25px;
+
+background:
+rgba(255,255,255,.05);
+
+border-radius:20px;
+
+border:
+1px solid rgba(255,255,255,.1);
+}
+
+.stat-title{
+color:#60A5FA;
+margin-bottom:10px;
+}
+
+.stat-value{
+font-size:24px;
+font-weight:bold;
+}
+
+/* IMAGE SECTION */
+
+.image-section{
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:25px;
+
+margin-bottom:30px;
+}
+
+.image-card{
+
+background:
+rgba(255,255,255,.05);
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+}
+
+.image-card h2{
+margin-bottom:15px;
+color:#60A5FA;
+}
+
+.result-image{
+
+width:100%;
+
+max-width:450px;
+
+height:350px;
+
+object-fit:contain;
+
+background:#0f172a;
+
+padding:10px;
+
+border-radius:15px;
+}
+
+/* PREDICTION BADGE */
+
+.prediction{
+
+padding:12px;
+
+border-radius:12px;
+
+margin-top:15px;
+
+font-weight:bold;
+
+font-size:22px;
+}
+
+.normal{
+background:#16A34A;
+}
+
+.warning{
+background:#F59E0B;
+}
+
+.danger{
+background:#DC2626;
+}
+
+/* CHART */
+
+.chart-card{
+margin-bottom:30px;
+}
+
+.chart-card canvas{
+height:350px !important;
+}
+
+/* TABLE */
+
+.table-card{
+
+margin-bottom:30px;
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+}
+
+th,td{
+
+padding:15px;
+
+text-align:left;
+
+border-bottom:
+1px solid rgba(255,255,255,.1);
+}
+
+th{
+color:#60A5FA;
+}
+
+/* BUTTONS */
+
+.buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+margin-top:20px;
+}
+
+.btn{
+
+width:250px;
+
+padding:15px;
+
+border-radius:12px;
+
+text-decoration:none;
+
+text-align:center;
+
+font-weight:bold;
+
+color:white;
+
+background:
+linear-gradient(
+90deg,
+#2563EB,
+#7C3AED
+);
+
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+}
+
+/* FOOTER */
+
+.footer{
+
+margin-top:40px;
+
+text-align:center;
+
+color:#94A3B8;
+}
+
+@media(max-width:900px){
+
+.stats{
+grid-template-columns:1fr;
+}
+
+.image-section{
+grid-template-columns:1fr;
+}
+
+.buttons{
+flex-direction:column;
+align-items:center;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>
+🫁 AI Lung Cancer Detection
+</h1>
+
+<p>
+Deep Learning Histopathology Analysis Dashboard
+</p>
+
+</div>
+
+<!-- METRICS -->
+
+<div class="stats">
+
+<div class="stat-card">
+
+<div class="stat-title">
+👤 Patient
+</div>
+
+<div class="stat-value">
+{{ patient_name }}
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-title">
+🎯 Confidence
+</div>
+
+<div class="stat-value">
+{{ confidence }}%
+</div>
+
+</div>
+
+<div class="stat-card">
+
+<div class="stat-title">
+🧠 Prediction
+</div>
+
+<div class="stat-value">
+{{ prediction }}
+</div>
+
+</div>
+
+</div>
+
+<!-- IMAGES -->
+
+<div class="image-section">
+
+<div class="image-card">
+
+<h2>
+📸 Original Image
+</h2>
+
+<img
+src="/{{ image_path }}"
+class="result-image">
+
+</div>
+
+<div class="image-card">
+
+<h2>
+🔥 Grad-CAM Heatmap
+</h2>
+
+<img
+src="/{{ gradcam_path }}"
+class="result-image">
+
+</div>
+
+</div>
+
+<!-- PREDICTION BADGE -->
+
+<div class="card" style="margin-bottom:30px;">
+
+<h2 style="color:#60A5FA;margin-bottom:15px;">
+Diagnosis Result
+</h2>
+
+{% if prediction == "Normal Lung Tissue" %}
+
+<div class="prediction normal">
+{{ prediction }}
+</div>
+
+{% elif prediction == "Lung Adenocarcinoma" %}
+
+<div class="prediction warning">
+{{ prediction }}
+</div>
+
+{% else %}
+
+<div class="prediction danger">
+{{ prediction }}
+</div>
+
+{% endif %}
+
+</div>
+
+<!-- GRAPH -->
+
+<div class="card chart-card">
+
+<h2 style="color:#60A5FA;margin-bottom:20px;">
+📈 Confidence Analysis
+</h2>
+
+<canvas id="confidenceChart"></canvas>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="card table-card">
+
+<h2 style="color:#60A5FA;margin-bottom:20px;">
+📊 Probability Distribution
+</h2>
+
+<table>
+
+<tr>
+<th>Class</th>
+<th>Confidence (%)</th>
+</tr>
+
+{% for label, score in probabilities.items() %}
+
+<tr>
+<td>{{ label }}</td>
+<td>{{ score }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="buttons">
+
+<a href="/" class="btn">
+🔄 Analyze Again
+</a>
+
+<a href="/download?file={{ report_path }}"
+class="btn">
+📄 Download Report
+</a>
+
+</div>
+
+<div class="footer">
+
+Powered by TensorFlow • Flask • Grad-CAM
+
+<br><br>
+
+⚠ Educational Purpose Only
+
+</div>
+
+<script>
+
+const labels =
+{{ probabilities.keys() | list | tojson }};
+
+const values =
+{{ probabilities.values() | list | tojson }};
+
+new Chart(
+document.getElementById(
+'confidenceChart'
+),
+{
+type:'bar',
+
+data:{
+labels:labels,
+
+datasets:[{
+label:'Confidence %',
+data:values,
+borderWidth:1
+}]
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+legend:{
+labels:{
+color:'white'
+}
+}
+},
+
+scales:{
+
+y:{
+beginAtZero:true,
+max:100,
+
+ticks:{
+color:'white'
+}
+},
+
+x:{
+ticks:{
+color:'white'
+}
+}
+}
+}
+}
+);
+
+</script>
+
+</body>
+</html>
+```

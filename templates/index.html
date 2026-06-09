@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+AI Lung Cancer Detection
+</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+
+min-height:100vh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:
+linear-gradient(
+135deg,
+#020617,
+#0F172A,
+#111827
+);
+
+color:white;
+}
+
+.container{
+
+width:90%;
+max-width:900px;
+
+padding:40px;
+
+background:
+rgba(255,255,255,0.05);
+
+backdrop-filter:blur(20px);
+
+border-radius:25px;
+
+border:
+1px solid rgba(255,255,255,0.1);
+
+box-shadow:
+0 8px 40px rgba(0,0,0,0.4);
+
+text-align:center;
+}
+
+h1{
+
+font-size:3rem;
+
+background:
+linear-gradient(
+90deg,
+#3B82F6,
+#8B5CF6
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+margin-bottom:15px;
+}
+
+.subtitle{
+
+color:#CBD5E1;
+
+margin-bottom:35px;
+}
+
+form{
+
+display:flex;
+flex-direction:column;
+
+gap:20px;
+}
+
+input[type=text]{
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:#1E293B;
+
+color:white;
+
+font-size:16px;
+}
+
+input[type=file]{
+
+padding:15px;
+
+border-radius:12px;
+
+background:#1E293B;
+
+color:white;
+}
+
+button{
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+90deg,
+#2563EB,
+#7C3AED
+);
+
+color:white;
+
+transition:0.3s;
+}
+
+button:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 0 25px
+rgba(124,58,237,.5);
+}
+
+.feature-box{
+
+display:flex;
+
+justify-content:space-around;
+
+margin-top:35px;
+}
+
+.feature{
+
+padding:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>
+🫁 AI Lung Cancer Detection
+</h1>
+
+<p class="subtitle">
+Deep Learning Based Histopathology Analysis
+</p>
+
+<form
+action="/predict"
+method="POST"
+enctype="multipart/form-data">
+
+<input
+type="text"
+name="patient_name"
+placeholder="Enter Patient Name"
+required>
+
+<input
+type="file"
+name="image"
+accept=".jpg,.jpeg,.png"
+required>
+
+<button type="submit">
+Analyze Image
+</button>
+
+</form>
+
+<div class="feature-box">
+
+<div class="feature">
+🔥 Grad-CAM
+</div>
+
+<div class="feature">
+📄 PDF Report
+</div>
+
+<div class="feature">
+🧠 AI Diagnosis
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

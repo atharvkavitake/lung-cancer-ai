@@ -93,6 +93,44 @@ The model classifies images into:
 
 ---
 
+## 📸 Application Screenshots
+
+### 🏠 Home Page
+
+<img width="1918" height="971" alt="Screenshot 2026-06-09 174145" src="https://github.com/user-attachments/assets/6a80ff07-911f-41d7-a477-9cdcb424f528" />
+
+
+**Description:** Landing page for uploading histopathology images.
+
+---
+
+### 🧠 Prediction Dashboard
+
+<img width="1918" height="963" alt="Screenshot 2026-06-09 174207" src="https://github.com/user-attachments/assets/acfa3a3c-51c5-4104-8bee-389f53e1dc48" />
+
+
+**Description:** Displays AI prediction, confidence score, and Grad-CAM heatmap.
+
+---
+
+### 📊 Confidence Analysis
+
+<img width="1917" height="908" alt="Screenshot 2026-06-09 174224" src="https://github.com/user-attachments/assets/dfa24e91-b08b-4434-acb3-ef54092189b9" />
+
+
+**Description:** Interactive confidence visualization generated using Chart.js.
+
+---
+
+### 📄 PDF Report & Probability Distribution
+
+<img width="1916" height="683" alt="Screenshot 2026-06-09 174418" src="https://github.com/user-attachments/assets/dda01e3b-9814-4885-b709-8955dba30082" />
+
+
+**Description:** Shows class probabilities and allows downloading the diagnostic report.
+
+---
+
 ## 📂 Project Structure
 
 ```text
